@@ -13,6 +13,12 @@ jobs:
           php-version: '8.2'
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
+      - name: Generate app key
+        run: php artisan key:generate
+      - name: Run migrations
+        run: php artisan migrate --seed
       - name: Run PHPUnit tests
         run: vendor/bin/phpunit
       - name: Run PHPStan analysis
